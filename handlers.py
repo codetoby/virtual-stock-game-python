@@ -1,11 +1,11 @@
 import requests
 import json
 import datetime
+import os
 from cs50 import SQL
 
 db = SQL("sqlite:///users.db")
-API_KEY = "pk_51d4c11c76f5449fa9515637d290e770"
-
+API_KEY = os.getenv("API_KEY")
 
 def buy(ticker, shares, id):
 
