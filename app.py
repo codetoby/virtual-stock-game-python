@@ -31,13 +31,6 @@ def admin_required(func):
     wrapper.__name__ = func.__name__
     return wrapper
 
-def checkInput(email) -> bool:
-    
-    if '@' in email or '.' in email:
-        return True
-    else:
-        return False
-
 @app.route("/register", methods=["GET", "POST"])
 def register():
     
@@ -46,9 +39,6 @@ def register():
         email = request.form.get("email")
         password = request.form.get("password")
         admin = False
-        
-        if email is None or password is None:
-            return render_template("failure.html")
         
         valid = checkInput(email)
         
@@ -71,15 +61,6 @@ def login():
         
         email = request.form.get("email")
         password = request.form.get("password")
-        
-        if email is None or password is None:
-            return render_template("failure.html")
-        
-        valid = checkInput(email)
-        
-        if valid == False:
-            return render_template("failure.html")
-        
         user = db.execute("select id, password from users where email = ?", email)
         
         if user:
@@ -88,7 +69,7 @@ def login():
                 session["id"] = user[0]["id"]
                 return redirect("/")
         
-        return render_template("failure.html")
+        return render_template("failure.html", error="incorrect username or password")
     
     return render_template("login.html")
 
@@ -117,14 +98,8 @@ def order():
     if request.method == "POST":
         id = session["id"]
         ticker = request.form.get("ticker")
-        try:
-            shares = int(request.form.get("shares"))
-        except:
-            return render_template("failure.html")
+        shares = int(request.form.get("shares"))
         orderTpye = request.form.get("orderType")
-        
-        if ticker is None or shares is None or orderTpye is None:
-            return render_template("failure.html")
         
         if orderTpye == "buy":
             order = buy(ticker, shares, id)
@@ -132,7 +107,7 @@ def order():
             order = sell(ticker, shares, id)
     
         if order["success"] == False:
-            return render_template("failure.html")     
+            return render_template("failure.html", error=order["reason"])     
     return render_template("order.html")
 
 @app.route("/history")
@@ -151,7 +126,7 @@ def quote():
     
     ticker = request.args.get("ticker")
     if ticker is None:
-        return render_template("failure.html")
+        return render_template("failure.html", error="provid a ticker as a query")
     
     data = get_data(ticker)
     
