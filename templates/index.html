@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/static/index.css">
+    {% block css %}{% endblock %}
+    <title>Stock Game</title>
+</head>
+<body>
+    <nav>
+        <div class="navbar-container">
+          <a class="navbar-logo" href="#">Virutal Stock Game</a>
+          <ul class="navbar-links">
+            <li><a href="#">Quote</a></li>
+            <li><a href="/portfolio">Portfolio</a></li>
+            <li><a href="/order">Buy/Sell</a></li>
+            <li><a href="/history">History</a></li>
+          </ul>
+          <div class="navbar-buttons">
+            <button class="btn-login">Login</button>
+            <button class="btn-register">Register</button>
+          </div>
+        </div>
+        {% block main %}{% endblock %}
+      </nav>
+      
+      
+</body>
+<script>
+    login = document.querySelector(".btn-login")
+    login.addEventListener("click", () => {
+        window.location = "/login"
+    })
+    register = document.querySelector(".btn-register")
+    register.addEventListener("click", () => {
+        window.location = "/register"
+    })
+</script>
+</html>

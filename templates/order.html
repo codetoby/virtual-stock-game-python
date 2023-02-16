@@ -1,0 +1,27 @@
+{% extends "index.html" %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="/static/order.css">
+{% endblock %}
+
+{% block main %}
+<form class="order-form" action="/order" method="POST">
+    <h2>Place Order</h2>
+    <div class="form-group">
+        <label for="ticker">Ticker</label>
+        <input type="text" id="ticker" name="ticker" autocomplete="off" required>
+    </div>
+    <div class="form-group">
+        <label for="shares">Shares</label>
+        <input type="number" id="shares" name="shares" autocomplete="off" required>
+    </div>
+    <div class="form-group">
+        <label for="orderType">Order Type</label>
+        <select id="orderType" name="orderType">
+            <option value="buy">Buy</option>
+            <option value="sell">Sell</option>
+        </select>
+    </div>
+    <button type="submit" class="btn-place-order">Place Order</button>
+</form>
+{% endblock %}

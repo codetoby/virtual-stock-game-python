@@ -1,0 +1,33 @@
+{% extends "index.html" %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="/static/history.css">
+{% endblock %}
+
+{% block main %}
+<div class="history-container">
+    <table class="transaction-history">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Ticker</th>
+                <th>Shares</th>
+                <th>Order Type</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for transaction in history %}
+            <tr>
+                <td>{{ transaction.date }}</td>
+                <td>{{ transaction.ticker }}</td>
+                <td>{{ transaction.shares }}</td>
+                <td>{{ transaction.orderType }}</td>
+                <td>{{ transaction.price }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}
